@@ -8,74 +8,71 @@ using System.Threading.Tasks;
 
 namespace inandout.Controllers
 {
-    public class ExpenseController : Controller
+    public class ExpensesCategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
-
-        public ExpenseController(ApplicationDbContext db)
+        public ExpensesCategoryController(ApplicationDbContext db)
         {
             _db = db;
         }
-
         public IActionResult Index()
         {
-            IEnumerable<Expense> objList = _db.Expense;
+            IEnumerable<ExpensesCategory> objList = _db.ExpensesCategorys;
             return View(objList);
         }
-        //get
+        //GET-Create
         public IActionResult Create()
         {
             return View();
         }
-        //post
+        //POST-Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Expense obj)
+        public IActionResult Create(ExpensesCategory obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Expense.Add(obj);
+                _db.ExpensesCategorys.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
-           
-            
+
         }
         //get for delete
-       
+
         public IActionResult Delete(int? id)
         {
-            
-            if(id == null || id ==0)
+
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var obj = _db.Expense.Find(id);
-           
-            if(obj== null)
+            var obj = _db.ExpensesCategorys.Find(id);
+
+            if (obj == null)
             {
 
                 return NotFound();
             }
 
             return View(obj);
-           
+
 
 
         }
         //post for delete
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? ExpenseId)
+        public IActionResult DeletePost(int? Id)
         {
-            var obj = _db.Expense.Find(ExpenseId);
+            var obj = _db.ExpensesCategorys.Find(Id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Expense.Remove(obj);
+            _db.ExpensesCategorys.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -84,40 +81,35 @@ namespace inandout.Controllers
         }
         //get for Update
 
-        public IActionResult Update(int? id)
+        public IActionResult Update(int? Id)
         {
 
-            if (id == null || id == 0)
+            if (Id == null || Id == 0)
             {
                 return NotFound();
             }
-            var obj = _db.Expense.Find(id);
+            var obj = _db.ExpensesCategorys.Find(Id);
 
             if (obj == null)
             {
-
                 return NotFound();
             }
 
             return View(obj);
-
-
-
         }
-        //POST Upadete
+        //post for update
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Expense obj)
+        public IActionResult Update(ExpensesCategory obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Expense.Update(obj);
+                _db.ExpensesCategorys.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
-
-
         }
+
     }
 }

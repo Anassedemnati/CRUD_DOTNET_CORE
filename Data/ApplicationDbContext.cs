@@ -16,5 +16,7 @@ namespace inandout.Data
         //creation du Dbset
         public DbSet<Item> Items { get; set; }//table 
         public DbSet<Expense> Expense { get; set; }
+        public DbSet<ExpensesCategory> ExpensesCategorys { get; set; }
+        
     }
 }

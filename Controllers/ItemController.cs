@@ -25,7 +25,6 @@ namespace inandout.Controllers
         //GET-Create
         public IActionResult Create()
         {
-           
             return View();
         } 
         //POST-Create
@@ -33,9 +32,76 @@ namespace inandout.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Item obj)
         {
-            _db.Items.Add(obj);
+            if (ModelState.IsValid) {
+                _db.Items.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+               
+        }
+        //get Delete
+        public IActionResult Delete(int? id)
+        {
+
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Items.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+        //post for delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? ItemId)
+        {
+            var obj = _db.Items.Find(ItemId);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Items.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+        //get for Update
+
+        public IActionResult Update(int? id)
+        {
+
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Items.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+        //post for update
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Item obj)
+        {
+            if (ModelState.IsValid) { 
+                _db.Items.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+        
     }
 }
