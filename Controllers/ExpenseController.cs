@@ -1,6 +1,7 @@
 ﻿using inandout.Data;
 using inandout.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,13 @@ namespace inandout.Controllers
         //get
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> TypeDropDow = _db.ExpensesCategorys.Select(i => new SelectListItem
+            {
+                Text= i.CatName,
+                Value = i.Id.ToString()
+
+            });
+            ViewBag.TypeDropDow = TypeDropDow;
             return View();
         }
         //post
@@ -34,6 +42,7 @@ namespace inandout.Controllers
         {
             if (ModelState.IsValid)
             {
+                obj.categoryId = obj.categoryId;
                 _db.Expense.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");

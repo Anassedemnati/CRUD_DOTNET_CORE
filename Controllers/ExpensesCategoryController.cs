@@ -75,15 +75,11 @@ namespace inandout.Controllers
             _db.ExpensesCategorys.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
-
-
-
         }
         //get for Update
 
         public IActionResult Update(int? Id)
         {
-
             if (Id == null || Id == 0)
             {
                 return NotFound();

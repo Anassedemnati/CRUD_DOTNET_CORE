@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using inandout.Data;
 
 namespace inandout.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210712142424_foreingKeyBtwExpensesANDcATEG")]
+    partial class foreingKeyBtwExpensesANDcATEG
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,13 +86,13 @@ namespace inandout.Migrations
 
             modelBuilder.Entity("inandout.Models.Expense", b =>
                 {
-                    b.HasOne("inandout.Models.ExpensesCategory", "ExpensesCategory")
+                    b.HasOne("inandout.Models.ExpensesCategory", "GetExpensesCategory")
                         .WithMany()
                         .HasForeignKey("categoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ExpensesCategory");
+                    b.Navigation("GetExpensesCategory");
                 });
 #pragma warning restore 612, 618
         }
